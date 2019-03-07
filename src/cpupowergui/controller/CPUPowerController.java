@@ -69,14 +69,13 @@ public class CPUPowerController {
         try {
             boolean knownLanguage = true;
             Locale locale = Locale.getDefault();
-            System.out.println(locale.getLanguage());
-            String headString;
+            String headString = "";
             
-            if(locale.getLanguage().compareTo("português")==0) {
+            if(locale.getDisplayLanguage().compareTo("português")==0) {
                 headString = "O regulador";
             }
             
-            else if(locale.getLanguage().compareTo("english")==0) {
+            else if(locale.getDisplayLanguage().compareTo("english")==0) {
                 headString = "The governor";
             }
             
@@ -91,7 +90,7 @@ public class CPUPowerController {
                 final ProcessResultReader stdout = new ProcessResultReader(pr.getInputStream(), "STDOUT");
                 stdout.run();            
                 output =  stdout.toString();
-                output = output.substring(output.indexOf("O regulador") + 13);
+                output = output.substring(output.indexOf(headString) + 13);
                 output = output.substring(0,output.indexOf(" ") - 1 );
                 output = output.toUpperCase();
                 governor = Governor.valueOf(output);
@@ -115,7 +114,8 @@ public class CPUPowerController {
         
         try {         
             Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("cpupower frequency-set --governor " + governorString );
+            String[] command = {"gksudo","cpupower frequency-set --governor " + governorString};
+            Process pr = rt.exec(command);
             
             String output;
             final ProcessResultReader stdout = new ProcessResultReader(pr.getErrorStream(), "STDERR");
