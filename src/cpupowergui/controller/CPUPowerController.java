@@ -113,15 +113,20 @@ public class CPUPowerController {
         String governorString = getSelectedButtonText( cpuPowerJFrame.getButtonGroup1() );              
         
         try {         
-            Runtime rt = Runtime.getRuntime();
-            String[] command = {"gksudo","cpupower frequency-set --governor " + governorString};
-            Process pr = rt.exec(command);
+            Runtime rt = Runtime.getRuntime();            
+            Process pr = rt.exec("pkexec cpupower frequency-set --governor " + governorString);
             
             String output;
-            final ProcessResultReader stdout = new ProcessResultReader(pr.getErrorStream(), "STDERR");
+            final ProcessResultReader stderr = new ProcessResultReader(pr.getErrorStream(), "STDERR");
+            stderr.run();            
+            output =  stderr.toString();  
+            System.out.println(output);
+            
+            
+            final ProcessResultReader stdout = new ProcessResultReader(pr.getErrorStream(), "STDOUT");
             stdout.run();            
             output =  stdout.toString();  
-            System.out.println(output);
+            System.out.println(output);            
         } catch (IOException ex) {
             if( ex.getMessage().contains("No such file or directory") ) {
                 JOptionPane.showMessageDialog(cpuPowerJFrame, "Programa 'cpupower' não encontrado, se essa distribuição do Linux for baseada"
@@ -147,6 +152,17 @@ public class CPUPowerController {
 
         return null;
     }    
+
+    public void showAbout() {
+        String text;
+        
+        text = "Desenvolvido por Robson Santana\n" +
+                "email: robson.poli@gmail.com\n" +
+                "versão: 1.1, 2019\n" +
+                "apoio: Prefeitura Municipal de Flores-PE (2017-2020)";
+        
+        JOptionPane.showMessageDialog(null, text, "Sobre", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     private enum Governor { PERFORMANCE, ONDEMAND, CONSERVATIVE, POWERSAVE, USERSPACE, UNKNOWN };
     private Governor governor;

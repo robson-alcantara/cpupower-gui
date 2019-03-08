@@ -104,6 +104,11 @@ public class CPUPowerJFrame extends javax.swing.JFrame {
         jMenu2.setText("Help");
 
         jMenuItem2.setText("About");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
@@ -180,6 +185,10 @@ public class CPUPowerJFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cpuPowerController.setGovernor();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        cpuPowerController.showAbout();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
 
