@@ -97,7 +97,7 @@ public class CPUPowerController {
             }
 
         } catch (IOException ex) {            
-            if( ex.getMessage().contains("No such file or directory") ) {
+            if( ex.getMessage().contains("No such file or directory") || ex.getMessage().contains("but can be installed") ) {
                 JOptionPane.showMessageDialog(cpuPowerJFrame, "Programa 'cpufreq-info' não encontrado, se essa distribuição do Linux for baseada"
                         + "\nno Ubuntu, tente instalar executando o comando: 'sudo apt install cpufrequtils'",
                         "Erro", JOptionPane.ERROR_MESSAGE);
@@ -128,7 +128,7 @@ public class CPUPowerController {
             output =  stdout.toString();  
             System.out.println(output);            
         } catch (IOException ex) {
-            if( ex.getMessage().contains("No such file or directory") ) {
+            if( ex.getMessage().contains("No such file or directory") || ex.getMessage().contains("but can be installed") ) {
                 JOptionPane.showMessageDialog(cpuPowerJFrame, "Programa 'cpupower' não encontrado, se essa distribuição do Linux for baseada"
                         + "\nno Ubuntu, tente instalar executando o comando: 'sudo apt install linux-tools-common' e"
                         + "\n'sudo apt-get install -y linux-tools-$(uname -r)'",
