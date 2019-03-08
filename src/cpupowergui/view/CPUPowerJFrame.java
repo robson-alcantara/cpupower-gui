@@ -7,6 +7,7 @@ package cpupowergui.view;
 
 import cpupowergui.controller.CPUPowerController;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 
 /**
  *
@@ -74,7 +75,6 @@ public class CPUPowerJFrame extends javax.swing.JFrame {
         jRadioButton5.setText("userspace");
 
         jCheckBox1.setText("fixed");
-        jCheckBox1.setEnabled(false);
 
         jButton1.setText("reconfigure");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -223,5 +223,9 @@ public class CPUPowerJFrame extends javax.swing.JFrame {
 
     public ButtonGroup getButtonGroup1() {
         return buttonGroup1;
+    } 
+
+    public JCheckBox getjCheckBox1() {
+        return jCheckBox1;
     }    
 }
