@@ -6,10 +6,7 @@
 package cpupowergui.controller;
 
 import cpupowergui.view.CPUPowerJFrame;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -158,6 +155,11 @@ public class CPUPowerController {
                 
 //                command = "pkexec grep -v  '#' /etc/init.d/cpufrequtils | awk -F \"=\" '/GOVERNOR=/ {print $2;}'";                
 //                pr = rt.exec(new String[] { "bash", "-c", command});
+
+                if( governor != Governor.ONDEMAND ) {
+                    command = "pkexec systemctl disable ondemand";                
+                    pr = rt.exec(new String[] { "bash", "-c", command});                                        
+                }
                 
                 String output;  
                 
