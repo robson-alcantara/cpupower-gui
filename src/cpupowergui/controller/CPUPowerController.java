@@ -153,14 +153,6 @@ public class CPUPowerController {
                 String command = "pkexec sed -i 's/^GOVERNOR=.*/GOVERNOR=\"" + governorString + "\"/' /etc/init.d/cpufrequtils";
                 Process pr = rt.exec(new String[] { "bash", "-c", command});
                 
-//                command = "pkexec grep -v  '#' /etc/init.d/cpufrequtils | awk -F \"=\" '/GOVERNOR=/ {print $2;}'";                
-//                pr = rt.exec(new String[] { "bash", "-c", command});
-
-                if( governor != Governor.ONDEMAND ) {
-                    command = "pkexec systemctl disable ondemand";                
-                    pr = rt.exec(new String[] { "bash", "-c", command});                                        
-                }
-                
                 String output;  
                 
                 final ProcessResultReader stderr = new ProcessResultReader(pr.getErrorStream(), "STDERR");
@@ -171,7 +163,26 @@ public class CPUPowerController {
                 final ProcessResultReader stdout = new ProcessResultReader(pr.getErrorStream(), "STDOUT");
                 stdout.run();            
                 output =  stdout.toString();  
-                System.out.println(output);                 
+                System.out.println(output);                      
+                
+//                command = "pkexec grep -v  '#' /etc/init.d/cpufrequtils | awk -F \"=\" '/GOVERNOR=/ {print $2;}'";                
+//                pr = rt.exec(new String[] { "bash", "-c", command});
+
+                if( governor != Governor.ONDEMAND ) {
+                    command = "pkexec systemctl disable ondemand";                
+                    pr = rt.exec(new String[] { "bash", "-c", command});  
+                    
+                    final ProcessResultReader stderr2 = new ProcessResultReader(pr.getErrorStream(), "STDERR");
+                    stderr2.run();            
+                    output = stderr2.toString();  
+                    System.out.println(output);                
+
+                    final ProcessResultReader stdout2 = new ProcessResultReader(pr.getErrorStream(), "STDOUT");
+                    stdout2.run();            
+                    output = stdout2.toString();  
+                    System.out.println(output);                     
+                }                
+           
                 JOptionPane.showMessageDialog(cpuPowerJFrame, "Governor permanently altered","Message",JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 Logger.getLogger(CPUPowerController.class.getName()).log(Level.SEVERE, null, ex);

@@ -74,7 +74,7 @@ public class CPUPowerJFrame extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton5);
         jRadioButton5.setText("userspace");
 
-        jCheckBox1.setText("fixed");
+        jCheckBox1.setText("persistent");
 
         jButton1.setText("reconfigure");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
